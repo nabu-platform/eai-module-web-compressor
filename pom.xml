@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nabu</groupId>
 	<artifactId>eai-module-web-compressor</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>${nabu-eai-module-web-compressor-version}</version>
 	<name>eai-module-web-compressor</name>
 	<url>http://nabu.be</url>
 

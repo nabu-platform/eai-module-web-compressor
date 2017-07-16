@@ -57,7 +57,7 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 						// we need to calculate the hash
 						if (hash == null) {
 							originalContent = readContent((ContentPart) event.getContent());
-							hash = GlueListener.hash(originalContent, "MD-5");
+							hash = GlueListener.hash(originalContent, "MD5");
 						}
 						compressedContent = (byte[]) artifact.getConfig().getCacheProvider().get(artifact.getId()).get(hash);
 					}
