@@ -12,6 +12,8 @@ import be.nabu.eai.module.web.application.WebFragmentPriority;
 import be.nabu.eai.repository.api.Repository;
 import be.nabu.eai.repository.artifacts.jaxb.JAXBArtifact;
 import be.nabu.libs.authentication.api.Permission;
+import be.nabu.libs.cache.impl.ByteSerializer;
+import be.nabu.libs.cache.impl.StringSerializer;
 import be.nabu.libs.events.api.EventSubscription;
 import be.nabu.libs.http.api.HTTPResponse;
 import be.nabu.libs.resources.api.ResourceContainer;
@@ -31,6 +33,9 @@ public class CompressorArtifact extends JAXBArtifact<CompressorConfiguration> im
 		}
 		EventSubscription<HTTPResponse, HTTPResponse> subscription = artifact.getDispatcher().subscribe(HTTPResponse.class, new CompressorListener(this));
 		subscriptions.put(getKey(artifact, path), subscription);
+		if (getConfig().getCacheProvider() != null) {
+			getConfig().getCacheProvider().create(getId(), 1024l*1024*100, 1024l*1024*10, new StringSerializer(), new ByteSerializer(), null, null);
+		}
 	}
 
 	@Override
@@ -43,7 +48,15 @@ public class CompressorArtifact extends JAXBArtifact<CompressorConfiguration> im
 					subscriptions.remove(key);
 				}
 			}
-		}		
+		}
+		if (getConfig().getCacheProvider() != null) {
+			try {
+				getConfig().getCacheProvider().get(getId()).clear();
+			}
+			catch (IOException e) {
+				// ignore
+			}
+		}
 	}
 	
 	private String getKey(WebApplication artifact, String path) {

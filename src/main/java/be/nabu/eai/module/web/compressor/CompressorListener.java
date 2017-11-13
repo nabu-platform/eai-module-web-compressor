@@ -101,14 +101,16 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 							artifact.getConfig().getCacheProvider().get(artifact.getId()).put(hash, compressedContent);
 						}
 					}
-					
-					if (compressedContent != null) {
-						ModifiablePart part = new PlainMimeContentPart(null, IOUtils.wrap(compressedContent, true), event.getContent().getHeaders());
+
+					// if we didn't find any compressed content but we did read out the original, return that as it can be read-once
+					byte [] contentToReturn = compressedContent != null ? compressedContent : originalContent;
+					if (contentToReturn != null) {
+						ModifiablePart part = new PlainMimeContentPart(null, IOUtils.wrap(contentToReturn, true), event.getContent().getHeaders());
 						
 						Header header = MimeUtils.getHeader("Content-Length", part.getHeaders());
 						if (header != null) {
 							part.removeHeader("Content-Length");
-							part.setHeader(new MimeHeader("Content-Length", "" + compressedContent.length));
+							part.setHeader(new MimeHeader("Content-Length", "" + contentToReturn.length));
 						}
 						
 						return new DefaultHTTPResponse(
