@@ -75,7 +75,7 @@ public class CompressorArtifact extends JAXBArtifact<CompressorConfiguration> im
 
 	@Override
 	public WebFragmentPriority getPriority() {
-		return WebFragmentPriority.LOWEST;
+		return WebFragmentPriority.LOW;
 	}
 	
 }
