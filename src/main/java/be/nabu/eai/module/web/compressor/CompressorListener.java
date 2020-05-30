@@ -57,7 +57,9 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 						// we need to calculate the hash
 						if (hash == null) {
 							originalContent = readContent((ContentPart) event.getContent());
-							hash = GlueListener.hash(originalContent, "MD5");
+							if (originalContent != null) {
+								hash = GlueListener.hash(originalContent, "MD5");
+							}
 						}
 						compressedContent = (byte[]) artifact.getConfig().getCacheProvider().get(artifact.getId()).get(hash);
 					}
@@ -77,6 +79,8 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 							CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 	//						CompilationLevel.ADVANCED_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 							options.setLanguageIn(LanguageMode.ECMASCRIPT5);
+							// set output mode
+//							options.setLanguageOut(LanguageMode.ECMASCRIPT3);
 								
 							SourceFile file = SourceFile.fromCode("file.js", new String(originalContent, charset));
 							SourceFile external = SourceFile.fromCode("file2.js", "");
