@@ -31,10 +31,13 @@ public class CompressorArtifact extends JAXBArtifact<CompressorConfiguration> im
 		if (isStarted(artifact, path)) {
 			stop(artifact, path);
 		}
-		EventSubscription<HTTPResponse, HTTPResponse> subscription = artifact.getDispatcher().subscribe(HTTPResponse.class, new CompressorListener(this));
-		subscriptions.put(getKey(artifact, path), subscription);
-		if (getConfig().getCacheProvider() != null) {
-			getConfig().getCacheProvider().create(getId(), 1024l*1024*100, 1024l*1024*10, new StringSerializer(), new ByteSerializer(), null, null);
+		// allow you to disable
+		if (getConfig().isEnabled()) {
+			EventSubscription<HTTPResponse, HTTPResponse> subscription = artifact.getDispatcher().subscribe(HTTPResponse.class, new CompressorListener(this));
+			subscriptions.put(getKey(artifact, path), subscription);
+			if (getConfig().getCacheProvider() != null) {
+				getConfig().getCacheProvider().create(getId(), 1024l*1024*100, 1024l*1024*10, new StringSerializer(), new ByteSerializer(), null, null);
+			}
 		}
 	}
 

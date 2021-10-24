@@ -12,6 +12,7 @@ import be.nabu.eai.repository.jaxb.ArtifactXMLAdapter;
 @XmlRootElement(name = "compressor")
 public class CompressorConfiguration {
 
+	private boolean enabled = true;
 	private Charset charset;
 	private CacheProviderArtifact cacheProvider;
 	
@@ -29,6 +30,12 @@ public class CompressorConfiguration {
 	}
 	public void setCacheProvider(CacheProviderArtifact cacheProvider) {
 		this.cacheProvider = cacheProvider;
+	}
+	public boolean isEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 }

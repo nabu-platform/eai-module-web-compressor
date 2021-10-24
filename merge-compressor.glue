@@ -1,0 +1,26 @@
+result = xml.objectify(file.read("compressor.xml"))
+
+tag("Web Compressor")
+
+result/enabled = parameter(
+	name: "enabled",
+	category: "Basic",
+	title: null,
+	description: "Whether you have compression enabled or not.",
+	type: "boolean",
+	encrypted: false,
+	optional: true,
+	default: "true",
+	raw: result/enabled)/current
+	
+result/charset = parameter(
+	name: "charset",
+	category: "Basic",
+	title: null,
+	description: "The charset that is used to communicate with the server",
+	type: null,
+	encrypted: false,
+	optional: true,
+	raw: result/charset)/current
+	
+file.write("compressor.xml", xml.stringify(result))
