@@ -43,7 +43,7 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 			String contentType = MimeUtils.getContentType(event.getContent().getHeaders());
 			if ("application/javascript".equals(contentType) || "text/css".equals(contentType)) {
 				try {
-					byte[] originalContent = null;
+					byte [] originalContent = null;
 					byte [] compressedContent = null;
 					
 					String hash = null;
@@ -78,7 +78,12 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 							CompilerOptions options = new CompilerOptions();
 							CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 	//						CompilationLevel.ADVANCED_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
-							options.setLanguageIn(LanguageMode.ECMASCRIPT5);
+							if (artifact.getConfig().isAllowEs6()) {
+								options.setLanguageIn(LanguageMode.ECMASCRIPT6_TYPED);
+							}
+							else {
+								options.setLanguageIn(LanguageMode.ECMASCRIPT5);
+							}
 							// set output mode
 //							options.setLanguageOut(LanguageMode.ECMASCRIPT3);
 								

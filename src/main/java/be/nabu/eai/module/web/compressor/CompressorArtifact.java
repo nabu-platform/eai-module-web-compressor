@@ -53,12 +53,13 @@ public class CompressorArtifact extends JAXBArtifact<CompressorConfiguration> im
 			}
 		}
 		if (getConfig().getCacheProvider() != null) {
-			try {
-				getConfig().getCacheProvider().get(getId()).clear();
-			}
-			catch (IOException e) {
-				// ignore
-			}
+			// @2022-03-22: due to a bug clustered caches were never reset correctly on shutdown. this bug has been fixed but we wanted to keep this behavior, in the future we might reenable it with a checkbox
+//			try {
+//				getConfig().getCacheProvider().get(getId()).clear();
+//			}
+//			catch (IOException e) {
+//				// ignore
+//			}
 		}
 	}
 	

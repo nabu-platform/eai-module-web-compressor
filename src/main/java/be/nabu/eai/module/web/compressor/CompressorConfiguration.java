@@ -15,6 +15,7 @@ public class CompressorConfiguration {
 	private boolean enabled = true;
 	private Charset charset;
 	private CacheProviderArtifact cacheProvider;
+	private boolean allowEs6;
 	
 	public Charset getCharset() {
 		return charset;
@@ -37,5 +38,11 @@ public class CompressorConfiguration {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+	public boolean isAllowEs6() {
+		return allowEs6;
+	}
+	public void setAllowEs6(boolean allowEs6) {
+		this.allowEs6 = allowEs6;
+	}
+
 }
