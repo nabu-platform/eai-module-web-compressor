@@ -79,7 +79,7 @@ public class CompressorListener implements EventHandler<HTTPResponse, HTTPRespon
 							CompilationLevel.SIMPLE_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 	//						CompilationLevel.ADVANCED_OPTIMIZATIONS.setOptionsForCompilationLevel(options);
 							if (artifact.getConfig().isAllowEs6()) {
-								options.setLanguageIn(LanguageMode.ECMASCRIPT6_TYPED);
+								options.setLanguageIn(LanguageMode.ECMASCRIPT_2021);	// ECMASCRIPT6_TYPED
 							}
 							else {
 								options.setLanguageIn(LanguageMode.ECMASCRIPT5);
